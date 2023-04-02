@@ -6,7 +6,12 @@ import Register from "./register"
 
 const Form = ( props ) => {
 
-    const { email, setEmail, pass, setPass, setCurrentForm, currentForm, username, setUsername} = props
+
+    const [email, setEmail] = useState('')
+    const [pass, setPass] = useState('')
+    const [user, setUser] = useState('')
+
+    const { setCurrentForm, currentForm} = props
 
     const toggleForm = (formname) => {
         setCurrentForm(formname)
@@ -18,6 +23,10 @@ const Form = ( props ) => {
         console.log(pass)
     }
 
+    const handleUserLogin = (userData) => {
+        setUser(userData);
+      };
+
     return (
         <div>{currentForm === "login" ?      
             <Login
@@ -26,7 +35,9 @@ const Form = ( props ) => {
                 setEmail={setEmail}
                 pass={pass}
                 setPass={setPass}
-                handleSubmit={handleSubmit}
+                handleUserLogin={handleUserLogin}
+                user={user}
+                setUse={setUser}
             /> 
             : 
             <Register 
@@ -35,9 +46,10 @@ const Form = ( props ) => {
                 setEmail={setEmail}
                 pass={pass}
                 setPass={setPass}
-                username={username}
-                setUsername={setUsername}
+                user={user}
+                setUser={setUser}
                 handleSubmit={handleSubmit}
+                handleUserLogin={handleUserLogin}
             />
             }
         </div>

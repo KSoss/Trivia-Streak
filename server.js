@@ -29,10 +29,12 @@ app.get('/everything', (req, res, next) => {
 })
 
 //Get individual user through log in
-app.get('/user/:email', async (req, res, next) => {
+app.post('/user/:email', async (req, res, next) => {
 
   const email = req.params.email
   const inputPassword = req.body.password;
+  console.log(req.body)
+  console.log(email, ' and ', inputPassword)
   
   try {
     const result = await pool.query('SELECT * FROM Users WHERE email = $1', [email])
@@ -63,7 +65,12 @@ app.post('/add', async (req, res) => {
         `INSERT INTO Users (username, email, password, currentStreak, bestStreak) VALUES ($1, $2, $3, NULL, NULL)`,
         [username, email, password]
       );
-      res.status(201).json({ message: `User ${username}, and email ${email}, and ${password} added successfully` });
+
+      const result = await pool.query('SELECT * FROM Users WHERE email = $1', [email])
+      const user = result.rows[0];
+
+      res.json({ success: true, user })
+
     } catch (error) {
       console.error(error);
       res.status(500).json({ message: 'Server error' });

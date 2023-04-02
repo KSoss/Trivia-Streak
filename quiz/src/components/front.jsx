@@ -5,13 +5,11 @@ import Form from "./form"
 
 const Front = () => {
 
-    const [email, setEmail] = useState('')
-    const [pass, setPass] = useState('')
     const [question, setQuestion] = useState(null)
     const [answered, setAnswered] = useState(false);
     const [next, setNext] = useState(0)
     const [currentForm, setCurrentForm] = useState('login')
-    const [username, setUsername] = useState('')
+
 
   useEffect(() => {
     fetch("https://opentdb.com/api.php?amount=1&category=15&type=multiple")
@@ -26,14 +24,8 @@ const Front = () => {
     return(
     <div>
       <Form 
-        email={email}
-        setEmail={setEmail}
-        pass={pass}
-        setPass={setPass}
         currentForm={currentForm}
         setCurrentForm={setCurrentForm}
-        username={username}
-        setUsername={setUsername}
       />
 
         {question ? 

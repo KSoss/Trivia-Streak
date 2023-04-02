@@ -3,7 +3,9 @@ import Form from "./form"
 
 const Register = ( props ) => {
 
-    const { email, setEmail, pass, setPass, username, setUsername } = props
+    const { email, setEmail, pass, setPass, handleUserLogin, user } = props
+
+    const [username, setUsername] = useState('')
 
 
     const postUser = async (url = 'http://localhost:8000/add', data = {}) => {
@@ -38,9 +40,14 @@ const Register = ( props ) => {
       
         const response = await postUser('http://localhost:8000/add', data);
       
-        if (response) {
+        if (response.success) {
           console.log('Registration successful:', response);
-          // Handle success, e.g., navigate to another page, show a success message, etc.
+          handleUserLogin(response.user)
+          console.log(response.user)
+
+          //Checking if User state has been changed.
+          // console.log(user)
+
         } else {
           console.error('Registration failed');
           // Handle error, e.g., show an error message, retry, etc.
@@ -52,7 +59,7 @@ const Register = ( props ) => {
         <div className = "form-container">
         <form onSubmit={handleSubmit}>
             <label htmlFor="newUsername">username</label>
-            <input value={username} onChange={(e) => setUsername(e.target.value)} type="text" placeholder="YourEmail@email.com" id="newUsername" name="username"></input>
+            <input value={username} onChange={(e) => setUsername(e.target.value)} type="text" placeholder="Username" id="newUsername" name="username"></input>
             <label htmlFor="newEmail">email</label>
             <input value={email} onChange={(e) => setEmail(e.target.value)} type="email" placeholder="YourEmail@email.com" id="newEmail" name="newEmail"></input>
             <label htmlFor="password">password</label>
