@@ -28,15 +28,42 @@ app.get('/everything', (req, res, next) => {
     })
 })
 
+//Get individual user through log in
+app.get('/user/:email', async (req, res, next) => {
+
+  const email = req.params.email
+  const inputPassword = req.body.password;
+  
+  try {
+    const result = await pool.query('SELECT * FROM Users WHERE email = $1', [email])
+    const user = result.rows[0];
+
+    if(!user) {
+      return res.status(404).json({message: 'user not found'})
+    }
+    
+    if (user.password === inputPassword) {
+      res.json({ success: true, user })
+    } else {
+      res.json({ success: false, message: 'Incorrect password' });
+    }
+
+  } catch (error) {
+    console.error(`error idk`, error);
+    res.status(500).json({ message: 'idk bro'})
+  }
+
+})
+
 app.post('/add', async (req, res) => {
-    const { username, email } = req.body;
+    const { username, email, password } = req.body;
   
     try {
       await pool.query(
-        `INSERT INTO Users (username, email, currentStreak, bestStreak) VALUES ($1, $2, NULL, NULL)`,
-        [username, email]
+        `INSERT INTO Users (username, email, password, currentStreak, bestStreak) VALUES ($1, $2, $3, NULL, NULL)`,
+        [username, email, password]
       );
-      res.status(201).json({ message: `User ${username}, and email ${email}, added successfully` });
+      res.status(201).json({ message: `User ${username}, and email ${email}, and ${password} added successfully` });
     } catch (error) {
       console.error(error);
       res.status(500).json({ message: 'Server error' });

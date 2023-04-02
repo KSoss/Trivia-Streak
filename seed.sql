@@ -1,21 +1,5 @@
-INSERT INTO Users (username, email, currentStreak, bestStreak)
-VALUES ('johndoe', 'johndoe@example.com', 4, 6),
-       ('janedoe', 'janedoe@example.com', 2, 7),
-       ('gamer123', 'gamer123@example.com', 0, 8),
-       ('player42', 'player42@example.com', 5, 5),
-       ('vgfan', 'vgfan@example.com', 3, 9),
-       ('triviaqueen', 'triviaqueen@example.com', 10, 10),
-       ('quizmaster', 'quizmaster@example.com', 8, 8),
-       ('controllerkid', 'controllerkid@example.com', 1, 3),
-       ('pixelguru', 'pixelguru@example.com', 7, 10),
-       ('arcadeace', 'arcadeace@example.com', 6, 6),
-       ('consoleking', 'consoleking@example.com', 9, 9),
-       ('retrogamer', 'retrogamer@example.com', 4, 4),
-       ('platformpro', 'platformpro@example.com', 2, 8),
-       ('adventurer', 'adventurer@example.com', 0, 6),
-       ('shooterexpert', 'shooterexpert@example.com', 5, 7),
-       ('puzzlewiz', 'puzzlewiz@example.com', 3, 5),
-       ('rpglover', 'rpglover@example.com', 1, 9),
-       ('strategyking', 'strategyking@example.com', 7, 8),
-       ('simulationfan', 'simulationfan@example.com', 6, 7),
-       ('fightingchamp', 'fightingchamp@example.com', 8, 10);
+INSERT INTO Users (username, email, password, currentStreak, bestStreak)
+VALUES ('john_doe', 'john.doe@example.com', 'johnspassword', 3, 10),
+       ('jane_doe', 'jane.doe@example.com', 'janespassword', 5, 15),
+       ('michael_smith', 'michael.smith@example.com', 'michaelspassword', 0, 7),
+       ('sarah_jones', 'sarah.jones@example.com', 'sarahspassword', 2, 4);

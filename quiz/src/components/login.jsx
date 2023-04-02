@@ -5,6 +5,37 @@ const Login = ( props ) => {
 
     const { email, setEmail, pass, setPass, toggleForm, handleSubmit} = props
 
+    async function loginUser(email, password) {
+        try {
+          const response = await fetch(`http://localhost:8000/user/${email}`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ password })
+          });
+      
+          if (!response.ok) {
+            throw new Error('Error fetching user data');
+          }
+      
+          const responseData = await response.json();
+      
+          if (responseData.success) {
+            console.log('Login successful:', responseData.user);
+            // Handle success, e.g., navigate to another page, set user state, etc.
+          } else {
+            console.log('Login failed:', responseData.message);
+            // Handle failure, e.g., show an error message, retry, etc.
+          }
+        } catch (error) {
+          console.error('Error fetching user data:', error);
+        }
+      }
+      
+      // Usage:
+    //   fetchUserByemail('john_doe');
+
     return (
         <div className="form-container">
         <form onSubmit={handleSubmit}>
