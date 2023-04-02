@@ -3,7 +3,7 @@ import React, { useState} from "react";
 
 const Login = ( props ) => {
 
-    const { email, setEmail, pass, setPass, toggleForm, handleUserLogin, user} = props
+    const { email, setEmail, pass, setPass, toggleForm, handleUserLogin, user, setUser} = props
 
     async function loginUser(email, password) {
         try {

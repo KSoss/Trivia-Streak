@@ -5,38 +5,25 @@ import UserInfo from "./userInfo"
 
 const Front = () => {
 
-    const [question, setQuestion] = useState(null)
-    const [answered, setAnswered] = useState(false);
-    const [next, setNext] = useState(0)
     const [currentForm, setCurrentForm] = useState('login')
+    const [user, setUser] = useState('')
 
 
-  useEffect(() => {
-    fetch("https://opentdb.com/api.php?amount=1&category=15&type=multiple")
-      .then((response) => response.json())
-      .then((data) => {
-        setQuestion(data.results[0]);
-      });
-  }, [next]);
-
-
-  
     return(
     <div>
       <UserInfo
         currentForm={currentForm}
         setCurrentForm={setCurrentForm}
+        user={user}
+        setUser={setUser}
       />
 
-        {question ? 
-        <Quiz 
-        question={question} 
-        answered={answered}
-        setAnswered={setAnswered}
-        setNext={setNext}
-        next={next}
-        /> 
-        : <p>Loading question...</p>}
+        
+      <Quiz 
+      user={user}
+      setUser={setUser}
+      /> 
+        
     </div>
     )
 }

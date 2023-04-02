@@ -9,9 +9,8 @@ const UserInfo = ( props ) => {
 
     const [email, setEmail] = useState('')
     const [pass, setPass] = useState('')
-    const [user, setUser] = useState('')
 
-    const { setCurrentForm, currentForm} = props
+    const { setCurrentForm, currentForm, user, setUser} = props
 
     const toggleForm = (formname) => {
         setCurrentForm(formname)
@@ -19,8 +18,10 @@ const UserInfo = ( props ) => {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        console.log(email)
-        console.log(pass)
+
+        // to make sure data is getting passed
+        // console.log(email)
+        // console.log(pass)
     }
 
     const handleUserLogin = (userData) => {
@@ -52,7 +53,7 @@ const UserInfo = ( props ) => {
                         setPass={setPass}
                         handleUserLogin={handleUserLogin}
                         user={user}
-                        setUse={setUser}
+                        setUser={setUser}
                     /> 
                     : 
                     <Register 
