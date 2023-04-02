@@ -4,7 +4,7 @@ import Register from "./register"
 
 
 
-const Form = ( props ) => {
+const UserInfo = ( props ) => {
 
 
     const [email, setEmail] = useState('')
@@ -72,4 +72,4 @@ const Form = ( props ) => {
 
 }
 
-export default Form
+export default UserInfo

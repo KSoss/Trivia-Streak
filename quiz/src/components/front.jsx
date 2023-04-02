@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Quiz from "./quiz"
-import Form from "./form"
+import UserInfo from "./userInfo"
 
 
 const Front = () => {
@@ -23,7 +23,7 @@ const Front = () => {
   
     return(
     <div>
-      <Form 
+      <UserInfo
         currentForm={currentForm}
         setCurrentForm={setCurrentForm}
       />

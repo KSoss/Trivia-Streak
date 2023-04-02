@@ -1,5 +1,5 @@
 import React, { useState} from "react";
-import Form from "./form"
+import Form from "./userInfo"
 
 const Register = ( props ) => {
 
