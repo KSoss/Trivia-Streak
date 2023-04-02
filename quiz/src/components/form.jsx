@@ -27,30 +27,45 @@ const Form = ( props ) => {
         setUser(userData);
       };
 
+    const logout = () => {
+        setUser('')
+    }
+
     return (
-        <div>{currentForm === "login" ?      
-            <Login
-                toggleForm={toggleForm}
-                email={email}
-                setEmail={setEmail}
-                pass={pass}
-                setPass={setPass}
-                handleUserLogin={handleUserLogin}
-                user={user}
-                setUse={setUser}
-            /> 
-            : 
-            <Register 
-                toggleForm={toggleForm}
-                email={email}
-                setEmail={setEmail}
-                pass={pass}
-                setPass={setPass}
-                user={user}
-                setUser={setUser}
-                handleSubmit={handleSubmit}
-                handleUserLogin={handleUserLogin}
-            />
+        <div>{
+            user ? (
+                <div>
+                    <p>
+                        logged in as <strong>{user.username}.</strong>
+                    </p>
+                    <button onClick={logout}>
+                        logout
+                    </button>
+                </div> 
+                ) : currentForm === "login" ?      
+
+                    <Login
+                        toggleForm={toggleForm}
+                        email={email}
+                        setEmail={setEmail}
+                        pass={pass}
+                        setPass={setPass}
+                        handleUserLogin={handleUserLogin}
+                        user={user}
+                        setUse={setUser}
+                    /> 
+                    : 
+                    <Register 
+                        toggleForm={toggleForm}
+                        email={email}
+                        setEmail={setEmail}
+                        pass={pass}
+                        setPass={setPass}
+                        user={user}
+                        setUser={setUser}
+                        handleSubmit={handleSubmit}
+                        handleUserLogin={handleUserLogin}
+                    />
             }
         </div>
     )
