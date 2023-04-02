@@ -1,16 +1,9 @@
 import React, { useState} from "react";
-import Register from "./register";
-import Form from "./form"
+
 
 const Login = ( props ) => {
 
-    const { email, setEmail, pass, setPass, toggleForm} = props
-
-    const handleSubmit = (e) => {
-        e.preventDefault()
-        console.log(email)
-        console.log(pass)
-    }
+    const { email, setEmail, pass, setPass, toggleForm, handleSubmit} = props
 
     return (
         <div className="form-container">

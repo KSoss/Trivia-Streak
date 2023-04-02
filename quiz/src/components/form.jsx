@@ -12,6 +12,11 @@ const Form = ( props ) => {
         setCurrentForm(formname)
     }
 
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        console.log(email)
+        console.log(pass)
+    }
 
     return (
         <div>{currentForm === "login" ?      
@@ -21,6 +26,7 @@ const Form = ( props ) => {
                 setEmail={setEmail}
                 pass={pass}
                 setPass={setPass}
+                handleSubmit={handleSubmit}
             /> 
             : 
             <Register 
@@ -31,6 +37,7 @@ const Form = ( props ) => {
                 setPass={setPass}
                 username={username}
                 setUsername={setUsername}
+                handleSubmit={handleSubmit}
             />
             }
         </div>

@@ -3,7 +3,6 @@ import Quiz from "./quiz"
 import Form from "./form"
 
 
-
 const Front = () => {
 
     const [email, setEmail] = useState('')
@@ -12,7 +11,7 @@ const Front = () => {
     const [answered, setAnswered] = useState(false);
     const [next, setNext] = useState(0)
     const [currentForm, setCurrentForm] = useState('login')
-    const [username, setUsername] = useState()
+    const [username, setUsername] = useState('')
 
   useEffect(() => {
     fetch("https://opentdb.com/api.php?amount=1&category=15&type=multiple")
