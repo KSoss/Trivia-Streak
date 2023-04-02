@@ -6,6 +6,8 @@ import Quiz from "./quiz"
 const Front = () => {
 
     const [question, setQuestion] = useState(null)
+    const [answered, setAnswered] = useState(false);
+    const [next, setNext] = useState(0)
 
   useEffect(() => {
     fetch("https://opentdb.com/api.php?amount=1&category=15&type=multiple")
@@ -13,13 +15,21 @@ const Front = () => {
       .then((data) => {
         setQuestion(data.results[0]);
       });
-  }, []);
+  }, [next]);
 
-
+  
 
     return(
     <div>
-        {question ? <Quiz question={question} /> : <p>Loading question...</p>}
+        {question ? 
+        <Quiz 
+        question={question} 
+        answered={answered}
+        setAnswered={setAnswered}
+        setNext={setNext}
+        next={next}
+        /> 
+        : <p>Loading question...</p>}
     </div>
     )
 }
