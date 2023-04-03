@@ -78,9 +78,9 @@ const QuizQuestion = ( props ) => {
   return (
     <>
       <p>{decodeQuestion}</p>
-      <div>
+      <div className="button-container">
         {decodedAnswers.map((answer, index) => (
-          <button key={index} onClick={() => handleAnswerClick(answer)} disabled={answered}>
+          <button className='button' key={index} onClick={() => handleAnswerClick(answer)} disabled={answered}>
             {answer}
           </button>
           

@@ -27,7 +27,8 @@ const Quiz = (props) => {
   return (
     <div>
       {trivia ? (
-        <div>
+        <div
+        className="quiz">
           <QuizQuestion
             trivia={trivia}
             answered={answered}
@@ -36,10 +37,10 @@ const Quiz = (props) => {
             streak={streak}
             setStreak={setStreak}
           />
-          {answered && <button onClick={handleNextQuestion}>Next Question</button>}
+          {answered && <button className='button' onClick={handleNextQuestion}>Next Question</button>}
         </div>
       ) : (
-        <p>Loading question...</p>
+        <p className="loading">Loading question...</p>
       )}
     </div>
   );

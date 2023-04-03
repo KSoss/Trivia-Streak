@@ -3,6 +3,7 @@ import Quiz from "./quiz"
 import UserInfo from "./userInfo"
 import Streak from "./streak"
 import Leaderboard from "./leaderboard";
+import "./quiz.css"
 
 const Front = () => {
 
