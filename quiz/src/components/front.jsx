@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Quiz from "./quiz"
 import UserInfo from "./userInfo"
 import Streak from "./streak"
+import Leaderboard from "./leaderboard";
 
 const Front = () => {
 
@@ -39,7 +40,7 @@ const Front = () => {
       streak={streak}
       setStreak={setStreak}
       /> 
-        
+      <Leaderboard />
     </div>
     )
 }

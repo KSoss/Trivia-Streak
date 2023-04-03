@@ -28,7 +28,7 @@ app.get('/everything', (req, res, next) => {
     })
 })
 
-//Get individual user through log in
+//Get individual user through log in. Using post since I keep hearing online it's more secure? Idk
 app.post('/user/:email', async (req, res, next) => {
 
   const email = req.params.email
@@ -57,12 +57,13 @@ app.post('/user/:email', async (req, res, next) => {
 
 })
 
+//Post to add new user through the register button
 app.post('/add', async (req, res) => {
     const { username, email, password } = req.body;
   
     try {
       await pool.query(
-        `INSERT INTO Users (username, email, password, currentStreak, bestStreak) VALUES ($1, $2, $3, NULL, NULL)`,
+        `INSERT INTO Users (username, email, password, currentStreak, bestStreak) VALUES ($1, $2, $3, 0, 0)`,
         [username, email, password]
       );
 
@@ -77,42 +78,28 @@ app.post('/add', async (req, res) => {
     }
   });
 
-  async function updateStreak(userId, isCorrect) {
-    try {
-      // Begin a transaction
-      await pool.query('BEGIN');
-  
-      if (isCorrect) {
-        // If the answer is correct, increment currentStreak
-        await pool.query(
-          `UPDATE Users
-           SET currentStreak = currentStreak + 1
-           WHERE user_id = $1`,
-          [userId]
-        );
-  
-        // Update bestStreak if currentStreak is higher
-        await pool.query(
-          `UPDATE Users
-           SET bestStreak = currentStreak
-           WHERE user_id = $1 AND currentStreak > bestStreak`,
-          [userId]
-        );
-      } else {
-        // If the answer is incorrect, reset currentStreak to 0
-        await pool.query(
-          `UPDATE Users
-           SET currentStreak = 0
-           WHERE user_id = $1`,
-          [userId]
-        );
-      }
-  
-      // Commit the transaction
-      await pool.query('COMMIT');
-    } catch (error) {
-      // Rollback the transaction in case of errors
-      await pool.query('ROLLBACK');
-      throw error;
-    }
+// Updates streak after correct/inccorrect response
+app.put('/user/update/:email', async (req, res) => {
+  try {
+    const { currentStreak, bestStreak } = req.body
+    const email = req.params.email;
+    await pool.query(`UPDATE users 
+      SET currentStreak = $1, bestStreak = $2
+      WHERE email = $3`, [currentStreak, bestStreak, email]
+    );
+    res.status(200).json({ message: 'Streaks updated' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server error' });
   }
+})
+
+// Leaderboard update and get
+app.get('/leaderboard', (req, res, next) => {
+  pool.query(`SELECT * FROM Users ORDER BY bestStreak DESC LIMIT 10`, (err, result) => {
+    if (err) {
+      return next(err);
+    }
+    res.json(result.rows);
+  });
+});
