@@ -1,9 +1,9 @@
-import React, { useState} from "react";
+import React, { useState } from "react";
 
 
 const Login = ( props ) => {
 
-    const { email, setEmail, pass, setPass, toggleForm, handleUserLogin, user, setUser} = props
+    const { email, setEmail, pass, setPass, toggleForm, handleUserLogin, user, setStreak} = props
 
     async function loginUser(email, password) {
         try {
@@ -24,6 +24,7 @@ const Login = ( props ) => {
           if (responseData.success) {
             console.log('Login successful:', responseData);
             handleUserLogin(responseData.user);
+            setStreak({ currentStreak: responseData.user.currentstreak, bestStreak: responseData.user.beststreak });
             // Handle success, e.g., navigate to another page, set user state, etc.
           } else {
             console.log('Login failed:', responseData.message);

@@ -10,7 +10,7 @@ const UserInfo = ( props ) => {
     const [email, setEmail] = useState('')
     const [pass, setPass] = useState('')
 
-    const { setCurrentForm, currentForm, user, setUser} = props
+    const { setCurrentForm, currentForm, user, setUser, setStreak} = props
 
     const toggleForm = (formname) => {
         setCurrentForm(formname)
@@ -46,6 +46,7 @@ const UserInfo = ( props ) => {
                 ) : currentForm === "login" ?      
 
                     <Login
+                        setStreak={setStreak}
                         toggleForm={toggleForm}
                         email={email}
                         setEmail={setEmail}
@@ -53,7 +54,7 @@ const UserInfo = ( props ) => {
                         setPass={setPass}
                         handleUserLogin={handleUserLogin}
                         user={user}
-                        setUser={setUser}
+                        // setUser={setUser}
                     /> 
                     : 
                     <Register 

@@ -1,27 +1,43 @@
 import React, { useState, useEffect } from "react";
 import Quiz from "./quiz"
 import UserInfo from "./userInfo"
-
+import Streak from "./streak"
 
 const Front = () => {
 
     const [currentForm, setCurrentForm] = useState('login')
     const [user, setUser] = useState('')
+    const [streak, setStreak] = useState({ currentStreak: 0, bestStreak: 0})
 
 
     return(
     <div>
+
+
+      
       <UserInfo
+      {...user}
+        setStreak={setStreak}
         currentForm={currentForm}
         setCurrentForm={setCurrentForm}
         user={user}
         setUser={setUser}
       />
 
-        
+      {user ? ( 
+        <Streak 
+        user={user}
+        streak={streak}
+        />
+      ) : (
+        <></>
+      )}
+
       <Quiz 
       user={user}
       setUser={setUser}
+      streak={streak}
+      setStreak={setStreak}
       /> 
         
     </div>
