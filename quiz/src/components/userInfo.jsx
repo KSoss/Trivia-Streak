@@ -9,7 +9,6 @@ const UserInfo = ( props ) => {
 
     const [email, setEmail] = useState('')
     const [pass, setPass] = useState('')
-
     const { setCurrentForm, currentForm, user, setUser, setStreak} = props
 
     const toggleForm = (formname) => {

@@ -1,18 +1,20 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 
 
 const QuizQuestion = ( props ) => {
   // Destructering to get values from front
 
+  //User and trivia defragmented
   const { trivia, answered, setAnswered, user, setStreak, streak } = props
+
+  //variables from trivia
   const { question, correct_answer, incorrect_answers } = trivia;
 
+  //getting streak value from user 
   let updatedStreak = streak;
 
-
-  console.log(updatedStreak)
-  // Sorting answers randomly
-  const answers = [correct_answer, ...incorrect_answers].sort(() => Math.random() - 0.5);
+  //gathering my correct/incorrect answers into one array to map latter
+  const answers = [correct_answer, ...incorrect_answers]
 
   // complicated function to fix my APIs text since it has some HTML codes to get around not having quotations.
   function decodeHtmlEntities(text) {
@@ -23,7 +25,10 @@ const QuizQuestion = ( props ) => {
 
   // Maping my answers and running question through the decoder
   const decodeQuestion = decodeHtmlEntities(question);
-  const decodedAnswers = answers.map((answer) => decodeHtmlEntities(answer));
+  const decodedAnswers = useMemo(() => {
+    const shuffledAnswers = [...answers].sort(() => Math.random() - 0.5);
+    return shuffledAnswers.map((answer) => decodeHtmlEntities(answer));
+  }, [trivia]);
   const decodedCorrectAnswer = decodeHtmlEntities(correct_answer);
 
 

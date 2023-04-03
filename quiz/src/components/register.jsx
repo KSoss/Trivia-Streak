@@ -55,13 +55,13 @@ const Register = ( props ) => {
 
 
     return (
-      <div className = "form-container">
-        <form className="form-login" onSubmit={handleSubmit}>
-            <label htmlFor="newUsername">username</label>
+      <div className="register-div">
+        <form className="register-form-container" onSubmit={handleSubmit}>
+            <label htmlFor="newUsername">Username</label>
             <input value={username} onChange={(e) => setUsername(e.target.value)} type="text" placeholder="Username" id="newUsername" name="username"></input>
-            <label htmlFor="newEmail">email</label>
+            <label htmlFor="newEmail">Email</label>
             <input value={email} onChange={(e) => setEmail(e.target.value)} type="email" placeholder="YourEmail@email.com" id="newEmail" name="newEmail"></input>
-            <label htmlFor="password">password</label>
+            <label htmlFor="password">Password</label>
             <input value={pass} onChange={(e) => setPass(e.target.value)}type="password" placeholder="*******" id="newPassword" name="password"></input>
             <button className="form-button">Register</button>
         </form>

@@ -3,7 +3,7 @@ import React, { useState } from "react";
 
 const Login = ( props ) => {
 
-    const { email, setEmail, pass, setPass, toggleForm, handleUserLogin, user, setStreak} = props
+    const { email, setEmail, pass, setPass, toggleForm, handleUserLogin, user, setUser, setStreak} = props
 
     async function loginUser(email, password) {
         try {
@@ -42,6 +42,10 @@ const Login = ( props ) => {
 
       };
 
+      const logout = () => {
+        setUser('')
+    }
+
       // if (responseData.success) {
       //   console.log('Login successful:', responseData.user);
         
@@ -49,19 +53,32 @@ const Login = ( props ) => {
       // } else {
       //   console.log('fuck')
 
-  return (
-      <div className="form-container">
-      <form className="form-register" onSubmit={handleLogin}>
-          <label htmlFor="email">email</label>
-          <input value={email} onChange={(e) => setEmail(e.target.value)} type="email" placeholder="YourEmail@email.com" id="email" name="email"></input>
-          <label htmlFor="password">password</label>
-          <input value={pass} onChange={(e) => setPass(e.target.value)}type="password" placeholder="*******" id="password" name="password"></input>
-          <button className="form-button">Log In</button>
-      </form>
-      <button className="form-button" onClick={() => toggleForm('register')}>Dont have an account? Register here.</button>
-      </div>
-  )
-}
+      return (
+        <>
+          { user ? (
+          <div className="logged">
+            <p>
+              logged in as <strong>{user.username}.</strong>
+            </p>
+            <button className="form-button" onClick={logout}>
+              Logout
+            </button>
+          </div>
+          ) : (
+            <div className="login-form-container"> 
+              <form className="form-register" onSubmit={handleLogin}>
+                <label htmlFor="email">email</label>
+                <input value={email} onChange={(e) => setEmail(e.target.value)} type="email" placeholder="YourEmail@email.com" id="email" name="email"></input>
+                <label htmlFor="password">password</label>
+                <input value={pass} onChange={(e) => setPass(e.target.value)}type="password" placeholder="*******" id="password" name="password"></input>
+                <button className="form-button">Log In</button>
+              </form>
+              <button className="form-button" onClick={() => toggleForm('register')}>Dont have an account? Register here.</button>
+            </div>
+            )}
+        </>
+      )
+    }
 
 export default Login
 
