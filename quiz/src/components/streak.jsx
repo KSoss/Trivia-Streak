@@ -5,9 +5,14 @@ const Streak = (props) => {
     const { streak } = props
 
     return(
-        <div>
-           Streak: {streak.currentStreak}
-           Best Streak {streak.bestStreak}
+        <div className="streak">
+            Your streaks!
+            <div>
+            Current Streak: {streak.currentStreak}
+            </div>
+            <div>
+            Best Streak {streak.bestStreak}
+            </div>
         </div>
     )
 }

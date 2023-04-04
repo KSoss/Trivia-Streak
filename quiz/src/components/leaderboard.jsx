@@ -16,10 +16,11 @@ const Leaderboard = ( props ) => {
 
     return (
         <div>
+          <div className="title">Leaderboard:</div>
             {leaders.map(({ username, beststreak }) => (
-                <li key={username}>
+                <div key={username}>
                 {username} - {beststreak}
-                </li>
+                </div>
         ))}
         </div>
     )

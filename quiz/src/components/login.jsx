@@ -66,14 +66,14 @@ const Login = ( props ) => {
           </div>
           ) : (
             <div className="login-form-container"> 
-              <form className="form-register" onSubmit={handleLogin}>
-                <label htmlFor="email">email</label>
+              <form className="login" onSubmit={handleLogin}>
+                <label htmlFor="email">Email</label>
                 <input value={email} onChange={(e) => setEmail(e.target.value)} type="email" placeholder="YourEmail@email.com" id="email" name="email"></input>
-                <label htmlFor="password">password</label>
+                <label htmlFor="password">Password</label>
                 <input value={pass} onChange={(e) => setPass(e.target.value)}type="password" placeholder="*******" id="password" name="password"></input>
                 <button className="form-button">Log In</button>
+                <button className="form-button" onClick={() => toggleForm('register')}>Dont have an account? Register here.</button>
               </form>
-              <button className="form-button" onClick={() => toggleForm('register')}>Dont have an account? Register here.</button>
             </div>
             )}
         </>

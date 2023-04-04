@@ -6,6 +6,7 @@ const Quiz = (props) => {
   const [trivia, setTrivia] = useState(null);
   const [next, setNext] = useState(0);
   const [answered, setAnswered] = useState(false)
+  const [response, setResponse] = useState('')
 
   const {user, streak, setStreak} = props 
 
@@ -21,6 +22,7 @@ const Quiz = (props) => {
   const handleNextQuestion = () => {
     setNext((prevNext) => prevNext + 1);
     setAnswered(false);
+    setResponse('')
   };
 
 
@@ -36,8 +38,13 @@ const Quiz = (props) => {
             user={user}
             streak={streak}
             setStreak={setStreak}
+            setResponse={setResponse}
           />
+          <div>
+            {response}
+          </div>
           {answered && <button className='button' onClick={handleNextQuestion}>Next Question</button>}
+
         </div>
       ) : (
         <p className="loading">Loading question...</p>

@@ -4,7 +4,6 @@ import Streak from "./streak"
 import Leaderboard from "./leaderboard";
 import Register from "./register"
 import Login from "./login"
-import "./quiz.css"
 
 const Front = () => {
 
@@ -42,37 +41,43 @@ const Front = () => {
           handleSubmit={handleSubmit}
         />
       ) : (
-        <>
-          < Login
-            {...user}
-            setStreak={setStreak}
-            currentForm={currentForm}
-            setCurrentForm={setCurrentForm}
-            toggleForm={toggleForm}
-            user={user}
-            setUser={setUser}
-            email={email}
-            setEmail={setEmail}
-            handleUserLogin={handleUserLogin}
-            pass={pass}
-            setPass={setPass}
-          />
-  
-          {user && (
-            <Streak 
+        <div>
+          <div className="login-container">
+            <Login
+              {...user}
+              setStreak={setStreak}
+              currentForm={currentForm}
+              setCurrentForm={setCurrentForm}
+              toggleForm={toggleForm}
               user={user}
-              streak={streak}
+              setUser={setUser}
+              email={email}
+              setEmail={setEmail}
+              handleUserLogin={handleUserLogin}
+              pass={pass}
+              setPass={setPass}
+           />
+          </div>
+          <div className="streak-container">
+            {user && (
+              <Streak 
+                user={user}
+                streak={streak}
             />
           )}
-  
+          </div>
+        <div className="quiz-container">
           <Quiz 
             user={user}
             setUser={setUser}
             streak={streak}
             setStreak={setStreak}
           />
-          <Leaderboard />
-        </>
+       </div>
+          <div className="leaders-container">
+            <Leaderboard />
+          </div>
+      </div>
       )}
     </div>
   );

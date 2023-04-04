@@ -5,11 +5,12 @@ const QuizQuestion = ( props ) => {
   // Destructering to get values from front
 
   //User and trivia defragmented
-  const { trivia, answered, setAnswered, user, setStreak, streak } = props
+  const { trivia, answered, setAnswered, user, setStreak, streak, setResponse } = props
 
   //variables from trivia
   const { question, correct_answer, incorrect_answers } = trivia;
 
+  console.log(correct_answer)
   //getting streak value from user 
   let updatedStreak = streak;
 
@@ -58,7 +59,7 @@ const QuizQuestion = ( props ) => {
     setAnswered(true)
 
     if (selectedAnswer === decodedCorrectAnswer) {
-      console.log("Correct answer!");
+      setResponse('Correct!')
 
       const updatedStreak = {
         currentStreak: streak.currentStreak + 1,
@@ -68,7 +69,7 @@ const QuizQuestion = ( props ) => {
       setStreak(updatedStreak)
 
     } else {
-      console.log("Incorrect answer!");
+      setResponse(`Incorrect: it was ${correct_answer}`)
       updatedStreak = {
         currentStreak: 0,
         bestStreak: streak.bestStreak,
@@ -82,7 +83,8 @@ const QuizQuestion = ( props ) => {
 
   return (
     <>
-      <p>{decodeQuestion}</p>
+      <p className="question"
+      >{decodeQuestion}</p>
       <div className="button-container">
         {decodedAnswers.map((answer, index) => (
           <button className='button' key={index} onClick={() => handleAnswerClick(answer)} disabled={answered}>
