@@ -52,7 +52,11 @@ const QuizQuestion = ( props ) => {
     }
   }
 
-
+  useEffect(() => {
+    if (user && user.email) {
+      streakUpdate(user.email);
+    }
+  }, [streak]);
 
   // correct/incorrect answer logic
   const handleAnswerClick = async (selectedAnswer) => {
@@ -77,8 +81,6 @@ const QuizQuestion = ( props ) => {
       setStreak(updatedStreak);
       console.log(updatedStreak)
     }
-    
-    await streakUpdate(user.email);
   };
 
   return (

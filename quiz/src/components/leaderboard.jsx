@@ -2,6 +2,7 @@ import React, { useState, useEffect} from "react";
 
 const Leaderboard = ( props ) => {
 
+    const { updateLeaderboard } = props
     const [leaders, setLeaders] = useState([])
 
 
@@ -11,8 +12,7 @@ const Leaderboard = ( props ) => {
           .then((data) => {
             setLeaders(data);
           });
-      }, []);
-
+      }, [updateLeaderboard]);
 
     return (
         <div>

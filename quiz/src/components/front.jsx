@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Quiz from "./quiz"
 import Streak from "./streak"
-import Leaderboard from "./leaderboard";
+
 import Register from "./register"
 import Login from "./login"
 
@@ -74,9 +74,6 @@ const Front = () => {
             setStreak={setStreak}
           />
        </div>
-          <div className="leaders-container">
-            <Leaderboard />
-          </div>
       </div>
       )}
     </div>

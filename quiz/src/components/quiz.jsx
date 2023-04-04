@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import QuizQuestion from "./quizQuestion";
+import Leaderboard from "./leaderboard";
 
 
 const Quiz = (props) => {
@@ -7,6 +8,7 @@ const Quiz = (props) => {
   const [next, setNext] = useState(0);
   const [answered, setAnswered] = useState(false)
   const [response, setResponse] = useState('')
+  const [updateLeaderboard, setUpdateLeaderboard] = useState(false);
 
   const {user, streak, setStreak} = props 
 
@@ -23,6 +25,7 @@ const Quiz = (props) => {
     setNext((prevNext) => prevNext + 1);
     setAnswered(false);
     setResponse('')
+    setUpdateLeaderboard((prev) => !prev)
   };
 
 
@@ -45,6 +48,9 @@ const Quiz = (props) => {
           </div>
           {answered && <button className='button' onClick={handleNextQuestion}>Next Question</button>}
 
+          <div className="leaders-container">
+            <Leaderboard updateLeaderboard={updateLeaderboard} />
+          </div>
         </div>
       ) : (
         <p className="loading">Loading question...</p>

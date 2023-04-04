@@ -30,7 +30,7 @@ const Register = ( props ) => {
     
     const handleSubmit = async (e) => {
         e.preventDefault();
-      
+        console.log(username)
         const data = {
           username: username,
           email: email,
