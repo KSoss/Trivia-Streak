@@ -16,7 +16,8 @@
 # Getting Started
 
 ### Clone the repository.
-#### `Run npm install` to install the required dependencies. Create a PostgreSQL database and update the connection information in the server configuration. 
+
+#### Run `npm install` to install the required dependencies. Create a PostgreSQL database and update the connection information in the server configuration. 
 
 ### Run `nodemon server.js` for the server to listen
 
