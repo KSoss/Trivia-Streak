@@ -1,0 +1,30 @@
+# Trivia Streak
+
+## Trivia Streak is a fun and engaging quiz application that allows users to test their knowledge and compete with others on a leaderboard. Users can log in, answer trivia questions, and accumulate streak points for correct answers.
+
+# Features
+
+### Users can create an account and log in to track their progress. Random trivia questions are fetched from the Open Trivia Database API. Questions are presented in a multiple-choice format. Users accumulate streak points for each consecutive correct answer. The leaderboard displays the best streaks of all users.
+
+# Tech Stack 
+
+### React for the frontend UI. Node.js and Express for the backend server.
+### PostgreSQL for the database. Docker for container
+### Fetch API for making API calls.
+### Nodemon for server listening
+
+# Getting Started
+
+### Clone the repository.
+#### `Run npm install` to install the required dependencies. Create a PostgreSQL database and update the connection information in the server configuration. 
+
+### Run `nodemon server.js` for the server to listen
+
+### run `docker'compose up -d` to initialize docker files if using docker for database.
+
+### navigate to the quiz folder and run: `npm start` to start the frontend application
+
+
+# Usage 
+
+### Sign up or log in to start playing. Answer trivia questions by selecting one of the four options. Each correct answer increases your current streak by 1. Your best streak is updated if your current streak surpasses it. Check the leaderboard to see how you rank against other players.
