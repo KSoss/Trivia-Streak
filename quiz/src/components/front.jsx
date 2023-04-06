@@ -13,9 +13,6 @@ const Front = () => {
   const [email, setEmail] = useState('')
   const [pass, setPass] = useState('')
 
-  console.log('I believe in you')
-  const test = 1
-
   const handleUserLogin = (userData) => {
     setUser(userData);
     setCurrentForm('login')
