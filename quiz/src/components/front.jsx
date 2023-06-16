@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Quiz from "./quiz"
 import Streak from "./streak"
-
 import Register from "./register"
 import Login from "./login"
 
