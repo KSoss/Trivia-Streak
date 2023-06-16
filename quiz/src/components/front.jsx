@@ -5,7 +5,7 @@ import Register from "./register"
 import Login from "./login"
 
 // firebase dependencies
-
+import { collection, doc, getDoc, setDoc, addDoc } from "firebase/firestore";
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
@@ -41,11 +41,11 @@ const Front = () => {
 
 
 
-  function signInWithGoogle() {
+  async function signInWithGoogle() {
     const provider = new GoogleAuthProvider();
-    signInWithPopup(auth, provider).catch((error) => {
-      console.error('Problem signing in with Google', error);
-    });
+    const result = await signInWithPopup(auth, provider);
+    const email = result.user.email
+    getUserData(email);
   }
 
   function signOutWithGoogle() {
@@ -54,6 +54,30 @@ const Front = () => {
     }).catch((error) => {
       console.error('Problem signing out', error);
     });
+  }
+
+  async function getUserData(email) {
+    const userRef = doc(firestore, "users", email); 
+    const docSnap = await getDoc(userRef);
+
+    if (docSnap.exists()) {
+      // User document already exists
+      setStreak(docSnap.data().streak);
+    } else {
+      // User document does not exist, so create it
+      try {
+        const userData = {
+          displayName: user.displayName,
+          email: user.email,
+          streak: [0, 0]
+        };
+
+        await setDoc(userRef, userData);
+        setStreak(userData.streak);
+      } catch (e) {
+        console.error("Error adding document: ", e);
+      }
+    }
   }
 
   return (
