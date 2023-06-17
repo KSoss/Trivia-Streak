@@ -5,17 +5,16 @@ const QuizQuestion = ( props ) => {
   // Destructering to get values from front
 
   //User and trivia defragmented
-  const { trivia, answered, setAnswered, user, setStreak, streak, setResponse } = props
+  const { trivia, answered, setAnswered, setStreak, streak, setResponse, updateStreak, updateLeaderboard, loggedInfo } = props
 
   //variables from trivia
   const { question, correct_answer, incorrect_answers } = trivia;
 
-  console.log(correct_answer)
-  //getting streak value from user 
-  let updatedStreak = streak;
-
   //gathering my correct/incorrect answers into one array to map latter
   const answers = [correct_answer, ...incorrect_answers]
+
+  console.log(correct_answer)
+  console.log(loggedInfo)
 
   // complicated function to fix my APIs text since it has some HTML codes to get around not having quotations.
   function decodeHtmlEntities(text) {
@@ -32,54 +31,17 @@ const QuizQuestion = ( props ) => {
   }, [trivia]);
   const decodedCorrectAnswer = decodeHtmlEntities(correct_answer);
 
-
-  async function streakUpdate(email) {
-    try {
-      const response = await fetch(`http://localhost:8000/user/update/${email}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(updatedStreak)
-      });
-  
-      if (!response.ok) {
-        throw new Error('Error fetching user data');
-       
-      }
-    } catch (error) {
-      console.log(error)
-    }
-  }
-
-  useEffect(() => {
-    if (user && user.email) {
-      streakUpdate(user.email);
-    }
-  }, [streak]);
-
   // correct/incorrect answer logic
   const handleAnswerClick = async (selectedAnswer) => {
-    setAnswered(true)
-
+    setAnswered(true);
+  
     if (selectedAnswer === decodedCorrectAnswer) {
-      setResponse('Correct!')
-
-      const updatedStreak = {
-        currentStreak: streak.currentStreak + 1,
-        bestStreak: Math.max(streak.currentStreak + 1, streak.bestStreak),
-      };
-
-      setStreak(updatedStreak)
-
+      setResponse("Correct!");
+      updateStreak(true);
+      updateLeaderboard(loggedInfo.streak, loggedInfo)
     } else {
-      setResponse(`Incorrect: it was ${correct_answer}`)
-      updatedStreak = {
-        currentStreak: 0,
-        bestStreak: streak.bestStreak,
-      };
-      setStreak(updatedStreak);
-      console.log(updatedStreak)
+      setResponse(`Incorrect: it was ${correct_answer}`);
+      updateStreak(false);
     }
   };
 

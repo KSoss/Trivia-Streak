@@ -3,33 +3,10 @@ import Quiz from "./quiz"
 import Streak from "./streak"
 import NameModal from "./usernameModal";
 
-// firebase dependencies
-import { collection, doc, getDoc, setDoc, addDoc } from "firebase/firestore";
-import { initializeApp } from "firebase/app";
-import { getAuth } from "firebase/auth";
-import { getFirestore } from "firebase/firestore";
-import { getAnalytics, logEvent } from "firebase/analytics";
-import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { useAuthState } from 'react-firebase-hooks/auth';
-import { useCollectionData } from 'react-firebase-hooks/firestore';
-import { onAuthStateChanged } from 'firebase/auth';
-
-// configs
-const firebaseConfig = {
-  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
-  authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
-  databaseURL: process.env.REACT_APP_FIREBASE_DATABASE_URL,
-  projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
-  storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
-  appId: process.env.REACT_APP_FIREBASE_APP_ID,
-  measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENT_ID
-};
-
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const firestore = getFirestore(app);
-const analytics = getAnalytics(app);
+import { onAuthStateChanged, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { doc, setDoc, getDoc } from "firebase/firestore";
+import { db, auth } from '../firebase.js';
 
 const Front = () => {
 
@@ -50,18 +27,11 @@ const Front = () => {
         // User is signed out
         setLoggedInfo('');
       }
-    });
-  
+    });  
     // Cleanup subscription on unmount
     return () => unsubscribe();
   }, []);
 
-  useEffect(() => {
-    // open the modal if the user is logged in but does not have a display name
-    if (user && !loggedInfo.displayName) {
-      setIsModalOpen(true);
-    }
-  }, [user, loggedInfo]);
 
   async function signInWithGoogle() {
     const provider = new GoogleAuthProvider();
@@ -72,7 +42,7 @@ const Front = () => {
 
   const setDisplayName = async (displayName) => {
     // update the displayName in firestore as well
-    const userRef = doc(firestore, "users", loggedInfo.email);
+    const userRef = doc(db, "users", loggedInfo.email);
     await setDoc(userRef, { displayName }, { merge: true });
   
     // update local state after Firestore update is complete
@@ -80,7 +50,7 @@ const Front = () => {
   };
 
   function signOutWithGoogle() {
-    getAuth().signOut().then(() => {
+    auth.signOut().then(() => {
       console.log("User signed out");
     }).catch((error) => {
       console.error('Problem signing out', error);
@@ -89,7 +59,7 @@ const Front = () => {
 
   async function getUserData(email) {
     setIsLoading(true)
-    const userRef = doc(firestore, "users", email); 
+    const userRef = doc(db, "users", email); 
     const docSnap = await getDoc(userRef);
 
     if (docSnap.exists()) {
@@ -130,13 +100,32 @@ const Front = () => {
     }
   
     // update the streak in firestore as well
-    const userRef = doc(firestore, "users", loggedInfo.email);
+    const userRef = doc(db, "users", loggedInfo.email);
     const newStreakData = { streak: [bestStreak, currentStreak] };
     await setDoc(userRef, newStreakData, { merge: true });
   
     // update local state after Firestore update is complete
     setLoggedInfo({ ...loggedInfo, streak: [bestStreak, currentStreak] });
 };
+
+useEffect(() => {
+  if (user) {
+    getUserData(user.email);
+  } else {
+    setIsLoading(false);
+  }
+}, [user]);
+
+useEffect(() => {
+  // open the modal if the user is logged in but does not have a display name
+  if (user && !loggedInfo.displayName) {
+    setIsModalOpen(true);
+  }
+}, [user, loggedInfo]);
+
+if (isLoading) {
+  return null; // or return a loading indicator
+}
 
 console.log(loggedInfo)
 
@@ -150,7 +139,7 @@ console.log(loggedInfo)
           </div>
           <div className="quiz-container">
             <Quiz 
-              user={user}
+              loggedInfo={loggedInfo}
               updateStreak={updateStreak}
             />
           </div>

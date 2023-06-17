@@ -6,16 +6,18 @@ const Streak = (props) => {
 
     const { streak } = loggedInfo
 
-    console.log(loggedInfo)
+    if (!loggedInfo) {
+        return <div></div>;
+    }
 
     return(
         <div className="streak">
             Your streaks!
             <div>
-            {/* Current Streak: {streak[0]} */}
+            Current Streak: {streak[1]}
             </div>
             <div>
-            {/* Best Streak: {streak[1]} */}
+            Best Streak: {streak[0]}
             </div>
         </div>
     )
