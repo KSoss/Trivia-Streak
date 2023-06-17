@@ -1,20 +1,17 @@
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useMemo } from "react";
 
 
 const QuizQuestion = ( props ) => {
   // Destructering to get values from front
 
   //User and trivia defragmented
-  const { trivia, answered, setAnswered, setStreak, streak, setResponse, updateStreak, updateLeaderboard, loggedInfo } = props
+  const { trivia, answered, setAnswered, setResponse, updateStreak, updateLeaderboard, loggedInfo } = props
 
   //variables from trivia
   const { question, correct_answer, incorrect_answers } = trivia;
 
   //gathering my correct/incorrect answers into one array to map latter
   const answers = [correct_answer, ...incorrect_answers]
-
-  console.log(correct_answer)
-  console.log(loggedInfo)
 
   // complicated function to fix my APIs text since it has some HTML codes to get around not having quotations.
   function decodeHtmlEntities(text) {

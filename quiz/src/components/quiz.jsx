@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import QuizQuestion from "./quizQuestion";
 import Leaderboard from "./leaderboard";
-import { collection, query, orderBy, limit, getDocs, addDoc, deleteDoc, doc, setDoc, getDoc } from 'firebase/firestore';
+import { collection, query, orderBy, limit, getDocs, deleteDoc, doc, setDoc, getDoc } from 'firebase/firestore';
 import { db } from '../firebase.js'
 
 const Quiz = (props) => {
@@ -39,7 +39,6 @@ const Quiz = (props) => {
     let currentBestStreak = 0;
     
     if (userDoc.exists) {
-      console.log(userDoc);
       currentBestStreak = userDoc.data().bestStreak;
     }
   

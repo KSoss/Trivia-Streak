@@ -10,7 +10,6 @@ import { db, auth } from '../firebase.js';
 
 const Front = () => {
 
-  const [currentForm, setCurrentForm] = useState('login')
   const [user] = useAuthState(auth);
   const [loggedInfo, setLoggedInfo] = useState('')
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -51,7 +50,6 @@ const Front = () => {
 
   function signOutWithGoogle() {
     auth.signOut().then(() => {
-      console.log("User signed out");
     }).catch((error) => {
       console.error('Problem signing out', error);
     });
@@ -144,8 +142,6 @@ useEffect(() => {
 if (isLoading) {
   return null; // or return a loading indicator
 }
-
-console.log(loggedInfo)
 
   return (
     <div>
