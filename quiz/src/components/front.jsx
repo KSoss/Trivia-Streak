@@ -145,6 +145,26 @@ if (isLoading) {
 
   return (
     <div>
+      <div className="header">
+        <div className="head-text">
+          Trivia Streak
+        </div>
+        <div className="log-container">
+            {user ? 
+              <button className="log-button" onClick={signOutWithGoogle}>Sign Out</button> 
+              : 
+              <button className="log-button" onClick={signInWithGoogle}>Sign in with Google</button>}
+        </div>
+    <div>
+      {isModalOpen && 
+        <NameModal 
+          isOpen={isModalOpen} 
+          closeModal={() => setIsModalOpen(false)} 
+          setDisplayName={setDisplayName}
+        />
+      }
+    </div>
+      </div>
         <>
           <div className="streak-container">
             <Streak 
@@ -158,22 +178,6 @@ if (isLoading) {
             />
           </div>
         </>
-        <div>
-          {user ? 
-            <button onClick={signOutWithGoogle}>Sign Out</button> 
-            : 
-            <button onClick={signInWithGoogle}>Sign in with Google</button>} 
-                <div>
-      {isModalOpen && 
-        <NameModal 
-          isOpen={isModalOpen} 
-          closeModal={() => setIsModalOpen(false)} 
-          setDisplayName={setDisplayName}
-        />
-      }
-    </div>
-        </div>
-
     </div>
   );
 }

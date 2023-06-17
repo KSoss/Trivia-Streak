@@ -6,24 +6,22 @@ import { db } from '../firebase.js'
 
 const Quiz = (props) => {
   const [trivia, setTrivia] = useState(null);
-  const [next, setNext] = useState(0);
   const [answered, setAnswered] = useState(false)
   const [response, setResponse] = useState('')
   const {loggedInfo, setLoggedInfo, updateStreak} = props;
 
-  useEffect(() => {
-    fetch("https://opentdb.com/api.php?amount=1&category=15&type=multiple")
-      .then((response) => response.json())
-      .then((data) => {
-        setTrivia(data.results[0]);
-      });
-  }, [next]);
-
-  const handleNextQuestion = () => {
-    setNext((prevNext) => prevNext + 1);
+  const handleNextQuestion = async () => {
+    setTrivia(null);
+    const response = await fetch("https://opentdb.com/api.php?amount=1&category=15&type=multiple");
+    const data = await response.json();
+    setTrivia(data.results[0]);
     setAnswered(false);
-    setResponse('')
+    setResponse('');
   };
+
+  useEffect(() => {
+    handleNextQuestion();
+  }, []);
 
   const updateLeaderboard = async (newBestStreak) => {
     // get the current lowest best streak on the leaderboard
@@ -61,27 +59,29 @@ const Quiz = (props) => {
   return (
     <div>
       {trivia ? (
-        <div
-        className="quiz">
-          <QuizQuestion
-            trivia={trivia}
-            answered={answered}
-            setAnswered={setAnswered}
-            loggedInfo={loggedInfo}
-            setLoggedInfo={setLoggedInfo}
-            updateLeaderboard={updateLeaderboard}
-            setResponse={setResponse}
-            updateStreak={updateStreak}
-          />
-          <div>
-            {response}
-          </div>
-          {answered && <button className='button' onClick={handleNextQuestion}>Next Question</button>}
+        <>
+          <div
+          className="quiz">
+            <QuizQuestion
+              trivia={trivia}
+              answered={answered}
+              setAnswered={setAnswered}
+              loggedInfo={loggedInfo}
+              setLoggedInfo={setLoggedInfo}
+              updateLeaderboard={updateLeaderboard}
+              setResponse={setResponse}
+              updateStreak={updateStreak}
+            />
+            <div>
+              {response}
+            </div>
+            {answered && <button className='button' onClick={handleNextQuestion}>Next Question</button>}
 
-          <div className="leaders-container">
-            <Leaderboard updateLeaderboard={updateLeaderboard} />
+            <div className="leaders-container">
+              <Leaderboard updateLeaderboard={updateLeaderboard} />
+            </div>
           </div>
-        </div>
+        </>
       ) : (
         <p className="loading">Loading question...</p>
       )}
