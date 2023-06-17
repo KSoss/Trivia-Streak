@@ -61,7 +61,7 @@ const Front = () => {
     setIsLoading(true)
     const userRef = doc(db, "users", email); 
     const docSnap = await getDoc(userRef);
-
+  
     if (docSnap.exists()) {
       setIsModalOpen(false)
       setLoggedInfo(docSnap.data());
@@ -79,6 +79,24 @@ const Front = () => {
         console.error("Error adding document: ", e);
       }
     }
+  
+    // Check if the user's document exists in the leaderboard collection
+    const leaderboardRef = doc(db, 'leaderboard', docSnap.data().displayName);
+    const leaderboardSnap = await getDoc(leaderboardRef);
+  
+    if (!leaderboardSnap.exists()) {
+      // Leaderboard document does not exist, so create it
+      try {
+        const leaderboardData = {
+          displayName: docSnap.data().displayName,
+          bestStreak: 0
+        };
+        await setDoc(leaderboardRef, leaderboardData);
+      } catch (e) {
+        console.error("Error adding document to leaderboard: ", e);
+      }
+    }
+  
     setIsLoading(false);
   }
 

@@ -38,7 +38,10 @@ const QuizQuestion = ( props ) => {
     if (selectedAnswer === decodedCorrectAnswer) {
       setResponse("Correct!");
       updateStreak(true);
-      updateLeaderboard(loggedInfo.streak, loggedInfo)
+
+      const newBestStreak = loggedInfo.streak[0] + 1;
+
+      updateLeaderboard(newBestStreak)
     } else {
       setResponse(`Incorrect: it was ${correct_answer}`);
       updateStreak(false);

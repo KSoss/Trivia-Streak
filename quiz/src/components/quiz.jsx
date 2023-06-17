@@ -36,7 +36,12 @@ const Quiz = (props) => {
   
     // get the current best streak for the user
     const userDoc = await getDoc(userRef);
-    const currentBestStreak = userDoc.exists ? userDoc.data().bestStreak : 0;
+    let currentBestStreak = 0;
+    
+    if (userDoc.exists) {
+      console.log(userDoc);
+      currentBestStreak = userDoc.data().bestStreak;
+    }
   
     // if new best streak is higher than the current one
     if (newBestStreak > currentBestStreak) {
