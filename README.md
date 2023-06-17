@@ -26,4 +26,4 @@ Trivia Streak is currently live at [https://trivia-streak.web.app/](https://triv
 1. Fork and clone the repository
 2. Installing dependencies with npm or yarn
 3. (optional) Set up firebase database and importing you're own firebase configurations in a .env.local file. Will run without a database but will not allow log in features or data to be saved
-4. Running the application locally with 'npm run start'
+4. Running the application locally with `npm run start`
