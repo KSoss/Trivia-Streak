@@ -1,3 +1,6 @@
+import './App.css';
+import Front from "./components/front.jsx"
+
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
@@ -20,3 +23,16 @@ const auth = getAuth(app);
 const analytics = getAnalytics(app);
 
 export { app, db, auth, analytics };
+
+
+
+
+function App() {
+  return (
+    <div className="App">
+      <Front />
+    </div>
+  );
+}
+
+export default App;

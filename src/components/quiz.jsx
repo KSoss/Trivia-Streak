@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import QuizQuestion from "./quizQuestion";
 import Leaderboard from "./leaderboard";
 import { collection, query, orderBy, limit, getDocs, deleteDoc, doc, setDoc, getDoc } from 'firebase/firestore';
-import { db } from '../firebase.js'
+import { db } from '../App'
 
 const Quiz = (props) => {
   const [trivia, setTrivia] = useState(null);

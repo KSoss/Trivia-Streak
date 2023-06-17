@@ -6,7 +6,7 @@ import NameModal from "./usernameModal";
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { onAuthStateChanged, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { doc, setDoc, getDoc } from "firebase/firestore";
-import { db, auth } from '../firebase.js';
+import { db, auth } from '../App';
 
 const Front = () => {
 
