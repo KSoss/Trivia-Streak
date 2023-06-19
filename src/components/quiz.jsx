@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import QuizQuestion from "./quizQuestion";
-import Leaderboard from "./leaderboard";
 import { collection, query, orderBy, limit, getDocs, deleteDoc, doc, setDoc, getDoc } from 'firebase/firestore';
 import { db } from '../App'
 
@@ -8,7 +7,8 @@ const Quiz = (props) => {
   const [trivia, setTrivia] = useState(null);
   const [answered, setAnswered] = useState(false)
   const [response, setResponse] = useState('')
-  const {loggedInfo, setLoggedInfo, updateStreak} = props;
+
+  const {loggedInfo, setLoggedInfo, updateStreak, leaders, setLeaders} = props;
 
   const handleNextQuestion = async () => {
     setTrivia(null);
@@ -22,6 +22,10 @@ const Quiz = (props) => {
   useEffect(() => {
     handleNextQuestion();
   }, []);
+
+  function deepEqual(a, b) {
+    return JSON.stringify(a) === JSON.stringify(b);
+  }
 
   const updateLeaderboard = async (newBestStreak) => {
     // get the current lowest best streak on the leaderboard
@@ -56,6 +60,23 @@ const Quiz = (props) => {
     }
   };
 
+
+  const fetchLeaders = async () => {
+    const leaderboardRef = collection(db, "leaderboard");
+    const leaderboardQuery = query(leaderboardRef, orderBy("bestStreak", "desc"), limit(10));
+    const leaderboardSnapshot = await getDocs(leaderboardQuery);
+  
+    const fetchedLeaders = leaderboardSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+  
+    if (!deepEqual(fetchedLeaders, leaders)) {
+      setLeaders(fetchedLeaders);
+    }
+  };
+
+  useEffect(() => {
+    fetchLeaders();
+  });
+
   return (
     <div>
       {trivia ? (
@@ -76,11 +97,8 @@ const Quiz = (props) => {
               {response}
             </div>
             {answered && <button className='button' onClick={handleNextQuestion}>Next Question</button>}
-
-            <div className="leaders-container">
-              <Leaderboard updateLeaderboard={updateLeaderboard} />
-            </div>
           </div>
+
         </>
       ) : (
         <p className="loading">Loading question...</p>

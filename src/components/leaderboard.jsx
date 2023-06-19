@@ -1,26 +1,8 @@
-import React, { useState, useEffect} from "react";
-import { collection, query, orderBy, limit, getDocs } from "firebase/firestore";
+import React from "react";
 import "firebase/firestore";
-import { db } from '../App';
 
-const Leaderboard = ( props ) => {
-
-    const { updateLeaderboard } = props
-    const [leaders, setLeaders] = useState([])
-
-
-    useEffect(() => {
-      const fetchLeaders = async () => {
-        const leaderboardRef = collection(db, "leaderboard");
-        const leaderboardQuery = query(leaderboardRef, orderBy("bestStreak", "desc"), limit(10));
-        const leaderboardSnapshot = await getDocs(leaderboardQuery);
-  
-        const fetchedLeaders = leaderboardSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-        setLeaders(fetchedLeaders);
-      };
-  
-      fetchLeaders();
-    }, [updateLeaderboard]);
+const Leaderboard = React.memo(( props ) => {
+  const { leaders } = props;
 
     return (
       <div>
@@ -32,6 +14,6 @@ const Leaderboard = ( props ) => {
         ))}
       </div>
     );
-  };
+  });
 
 export default Leaderboard

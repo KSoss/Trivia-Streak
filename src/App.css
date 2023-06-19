@@ -1,19 +1,46 @@
 * {
   font-family: "Inter UI","SF Pro Display",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen,Ubuntu,Cantarell,"Open Sans","Helvetica Neue",sans-serif;
-}
-
-.App {
-  text-align: center;
-  min-height: 100vh;
-  font-size: 16px;
-  font-weight: 500;
   color: white;
+  
 }
 
 body {
-    margin: 0;
-    background-image: linear-gradient(79deg, #282c34, #28342b 46%, #2a354b);
-  }
+  margin: 0;
+  background-image: linear-gradient(79deg, #282c34, #28342b 46%, #2a354b);
+  min-height: 100vh;
+}
+
+.header {
+  display: flex;
+  overflow: hidden;
+}
+
+.log-button {
+  background: rgba(24, 255, 78, 0.089);
+  border-color: rgb(24, 255, 78);
+  width: 100px;
+  height: 50px;
+  color: rgb(24, 255, 78);
+  font-size: small;
+  transition: all .8s;
+  cursor: pointer;
+
+}
+
+.log-button:hover {
+  color: white;
+  background-color: rgb(24, 255, 78);
+  transform: scale(1.05);
+}
+
+.head-text {
+  font-size: 2em;
+  color: rgb(24, 255, 78);
+  margin: 0.5em 0;
+  text-align: center;
+  width: 100%;
+  margin-right: -100px;
+}
 
 .button-container{
     display: flex;
@@ -55,7 +82,8 @@ body {
 .quiz-container {
   display: flex;
   justify-content: center;
-  align-items: center;
+  text-align: center;
+  height: 400px;
 }
 
 .form-button {
@@ -116,10 +144,14 @@ body {
   bottom: 0;
   background: rgba(0, 0, 0, 0.5);
 }
-
+.modal-form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .user-button {
   color: white;
-  background: rgb(44, 155, 44);
+  background: rgb(0, 0, 0);
   border-top-right-radius: 10px;
   border-bottom-right-radius: 10px;
   border-style: none;
@@ -127,15 +159,15 @@ body {
   width: 30%;
   max-width: 200px;
   height: 50px;
-  box-shadow: 0px 1px 10px rgb(24, 255, 78);
 }
 
 .user-input {
+  color: black;
   border-top-left-radius: 10px;
   border-bottom-left-radius: 10px;
   width: 60%;
   max-width: 400px;
-  height: 50px;
+  height: 44px;
   box-shadow: 0px 1px 10px rgb(24, 255, 78);
   font-size: large;
   text-align: center;
@@ -143,4 +175,9 @@ body {
 
 .user-input:focus {
   outline: none;
+}
+
+.leaders-container{
+  text-align: center;
+  align-items: center;
 }

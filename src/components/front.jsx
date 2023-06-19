@@ -2,11 +2,13 @@ import React, { useState, useEffect } from "react";
 import Quiz from "./quiz"
 import Streak from "./streak"
 import NameModal from "./usernameModal";
+import Leaderboard from "./leaderboard";
 
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { onAuthStateChanged, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { doc, setDoc, getDoc } from "firebase/firestore";
 import { db, auth } from '../App';
+
 
 const Front = () => {
 
@@ -14,6 +16,7 @@ const Front = () => {
   const [loggedInfo, setLoggedInfo] = useState('')
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [leaders, setLeaders] = useState([])
   
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
@@ -46,6 +49,22 @@ const Front = () => {
   
     // update local state after Firestore update is complete
     setLoggedInfo({ ...loggedInfo, displayName });
+
+    const leaderboardRef = doc(db, 'leaderboard', displayName);
+    const leaderboardSnap = await getDoc(leaderboardRef);
+  
+    if (!leaderboardSnap.exists()) {
+      // Leaderboard document does not exist, so create it
+      try {
+        const leaderboardData = {
+          displayName: displayName,
+          bestStreak: 0
+        };
+        await setDoc(leaderboardRef, leaderboardData);
+      } catch (e) {
+        console.error("Error adding document to leaderboard: ", e);
+      }
+    }
   };
 
   function signOutWithGoogle() {
@@ -75,23 +94,6 @@ const Front = () => {
         setLoggedInfo(userData);
       } catch (e) {
         console.error("Error adding document: ", e);
-      }
-    }
-  
-    // Check if the user's document exists in the leaderboard collection
-    const leaderboardRef = doc(db, 'leaderboard', docSnap.data().displayName);
-    const leaderboardSnap = await getDoc(leaderboardRef);
-  
-    if (!leaderboardSnap.exists()) {
-      // Leaderboard document does not exist, so create it
-      try {
-        const leaderboardData = {
-          displayName: docSnap.data().displayName,
-          bestStreak: 0
-        };
-        await setDoc(leaderboardRef, leaderboardData);
-      } catch (e) {
-        console.error("Error adding document to leaderboard: ", e);
       }
     }
   
@@ -175,7 +177,14 @@ if (isLoading) {
             <Quiz 
               loggedInfo={loggedInfo}
               updateStreak={updateStreak}
+              leaders={leaders}
+              setLeaders={setLeaders}
             />
+          </div>
+          <div className="leaders-container">
+              <Leaderboard 
+              leaders={leaders}
+              />
           </div>
         </>
     </div>

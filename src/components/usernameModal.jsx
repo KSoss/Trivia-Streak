@@ -27,7 +27,7 @@ const NameModal = ({ isOpen, closeModal, setDisplayName }) => {
         shouldCloseOnOverlayClick={false}
     >
         <h2 className='user-text'>Please enter a username for leaderboard</h2>
-        <form onSubmit={handleSubmit}>
+        <form className="modal-form" onSubmit={handleSubmit}>
             <input type="text" className='user-input'value={inputValue} onChange={handleInput} />
             <button type="submit" className='user-button'>Submit</button>
         </form>
