@@ -39,7 +39,7 @@ const QuizQuestion = (props) => {
 
       updateLeaderboard(newBestStreak)
     } else {
-      setResponse(`Incorrect: it was ${correct_answer}`);
+      setResponse(`Incorrect: it was ${decodedCorrectAnswer}`);
       updateStreak(false);
     }
   };
